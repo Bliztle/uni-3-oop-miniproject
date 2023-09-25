@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo -e "Compiling and running the application...\n"
+./build > /dev/null
+echo -e "Running the application...\n"
+./run
