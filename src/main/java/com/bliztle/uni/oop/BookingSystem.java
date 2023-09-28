@@ -9,7 +9,7 @@ public class BookingSystem {
 
     private static Scanner scanner;
 
-    private HashSet<String> rooms = new HashSet<>();
+    private HashSet<Room> rooms = new HashSet<>();
     private HashSet<Group> groups = new HashSet<>();
     private CourseSet courses = new CourseSet();
     private ArrayList<Reservation> reservations = new ArrayList<>();
@@ -20,8 +20,9 @@ public class BookingSystem {
     private void addRoom() {
         System.out.print("Enter room id: ");
         String roomId = scanString();
-        if (rooms.add(roomId))
-            System.out.println("Room " + roomId + " added!");
+        Room room = new Room(roomId);
+        if (rooms.add(room))
+            System.out.println("Room " + room.getId() + " added!");
         else
             System.out.println("Room already exists!");
     }
@@ -104,12 +105,6 @@ public class BookingSystem {
 
         if (missing.size() > 0) {
             printMissing("reservation", missing);
-            return;
-        }
-
-        if (courses.size() == 0) {
-            System.out.println(
-                    "There are no courses in the system!\nPlease add a course before attempting to add a group.");
             return;
         }
 

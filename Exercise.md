@@ -24,7 +24,7 @@ private static void goodbye()
 private static void start()
 ```
 
-`start` is static as the only entry point of the system, and `introduction` and `goodbye` are static as they are only called from `start`. This architecture is chosen as no outside classes need to interact with the system, so no instance is needed outside of the class. Instead, `start` creates a new instance from which to run the system. This allows future systems to start up without having to restart the program, or otherwise manually clean up.
+`start` is static as the only entry point of the system, and `introduction` and `goodbye` as the state of the system has no relevance to their behaviour. This architecture is chosen as no outside classes need to interact with the system, so no instance is needed outside of the class. Instead, `start` creates a new instance from which to run the system. This allows future systems to start up without having to restart the program, or otherwise manually clean up.
 
 as for interaction, that is handled by the following methods, which are all private as all interaction is handled by the system itself.
 
@@ -52,3 +52,84 @@ The `Group` and `Course` classes both inherit from a `HasStudents` class, as the
 `reservations` is an `ArrayList` as reservations need to be expandable, but do not have to be unique.
 
 ### 1.3
+
+I have chosen the core classes of the system, other than `BookingSystem`, to be `Group`, `Course`, `Reservation` and `Room`, as these represent the main objects relevant to the system. `CourseSet` is also included, but is not a core class, but rather a collection of helper functions for searching the set of courses.
+
+### 1.4
+
+While defining these classes, the previously mentioned `HasStudents` class was indentified as common functionality between `Group` and `Course`. This was then extracted into a superclass, which both classes now inherit from.
+
+```java
+public abstract class HasStudents {
+    private HashSet<String> studentIds = new HashSet<>();
+
+    public boolean addStudent()
+
+    public boolean hasStudent()
+
+    public int studentCount()
+}
+```
+
+As all of these are dependent on the current state of the object, they are all instance methods.
+
+`hasStudents` consumers:
+
+```java
+public class Group extends HasStudents {
+
+    public static final int MAX_STUDENTS = 6;
+    private final String id;
+    // Course id is not yet relevant to the system
+    private final String courseId;
+    public Group(String id, String courseId)
+    public int hashCode()
+    public boolean equals(Object obj)
+}
+```
+
+`MAX_STUDENTS` is static and final since the constant maximum group size is defined in the exercise. `id` and `courseId` are final as they should not be changed after creation. It is important `id` is static as it is used in both `hashCode` and `equals`.
+
+The rest of the methods are instance methods as they are dependent on the current state of the object.
+
+The same logic goes for `Course` and `CourseSet` with regards to class vs instance methods / fields:
+
+```java
+public class Course extends HasStudents {
+
+    private String id;
+    public Course(String id)
+    public String getId()
+    public int hashCode()
+    public boolean equals(Object obj)
+}
+```
+
+```java
+public class Room {
+    private final String id;
+    public Room(String id)
+    public String getId()
+    public int hashCode()
+    public boolean equals(Object obj)
+}
+```
+
+```java
+public class CourseSet extends HashSet<Course> {
+
+    public boolean addStudent(String courseId, String studentId)
+    public boolean hasStudent(String courseId, String studentId)
+    public int countCoursesByStudent(String studentId);
+    // toString exists for debugging purposes
+    public String toString()
+}
+```
+
+### 1.5
+
+These were already shown in `1.4`, but are added to be used for checking if a group or course already exists in the system.
+
+### 1.6
+
+It has been added.

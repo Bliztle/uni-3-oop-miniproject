@@ -17,4 +17,12 @@ public class Group extends HasStudents {
     public int hashCode() {
         return (id).hashCode();
     }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Group) {
+            Group group = (Group) obj;
+            return id.equals(group.id);
+        }
+        return false;
+    }
 }

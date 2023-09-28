@@ -2,7 +2,7 @@ package com.bliztle.uni.oop;
 
 import java.util.HashSet;
 
-public class HasStudents {
+public abstract class HasStudents {
     private HashSet<String> studentIds = new HashSet<>();
 
     public boolean addStudent(String studentId) {
